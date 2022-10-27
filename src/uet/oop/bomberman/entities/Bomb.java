@@ -19,7 +19,6 @@ public class Bomb extends Entity {
     private static int number_bomb = 1;
     private static final int power_bomb = 1; // Số ô bom phá theo 1 hướng
     private static int swap_active = 0;
-    private static int swap_explosion = 1;
 
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
@@ -122,7 +121,6 @@ public class Bomb extends Entity {
         Game.entities.removeIf(i -> i instanceof Flame);
         time_bomb = System.currentTimeMillis();
         time_tmp = time_bomb;
-        swap_explosion = 1;
         swap_active = 0;
         try {
             Game.bombs.remove(bomb);
