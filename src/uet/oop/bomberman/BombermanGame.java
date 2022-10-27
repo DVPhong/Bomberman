@@ -42,8 +42,8 @@ public class BombermanGame extends Application {
 
         Menu menuGame = new Menu();
         StageSetting stageSetting = new StageSetting();
-        Sound.upSound();
-        Sound.lobby.play();
+          Sound.upSound();
+//        Sound.lobby.play();
         stage.setScene(menuGame.menu);
         menuGame.setting.setOnAction(event -> {
             stageSetting.settingStage.setX(stage.getX() + 704);
@@ -55,7 +55,7 @@ public class BombermanGame extends Application {
             Sound.music.stop();
             Sound.music = Sound.bgGame;
             Sound.music.setCycleCount(AudioClip.INDEFINITE);
-            Sound.music.play();
+            //Sound.music.play();
             stage.setScene(scene);
             timer.start();
         });

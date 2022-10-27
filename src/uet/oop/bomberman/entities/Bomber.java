@@ -175,6 +175,6 @@ public class Bomber extends Entity {
     }
 
     public void setImg(Image image) {
-        img = image;
+        this.img = image;
     }
 }

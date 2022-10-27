@@ -206,5 +206,6 @@ public class Game {
             --i;
         }
         setGame();
+        Bomb.setNumber_bomb(1);
     }
 }
