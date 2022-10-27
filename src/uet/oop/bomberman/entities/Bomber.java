@@ -7,8 +7,6 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.concurrent.TimeUnit;
-
 public class Bomber extends Entity {
     public static int coordinatesX;
     public static int coordinatesY;

@@ -1,5 +1,10 @@
 package uet.oop.bomberman;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -10,15 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import javafx.stage.StageStyle;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 
 public class BombermanGame extends Application {
@@ -31,10 +29,6 @@ public class BombermanGame extends Application {
     public static Scene scene;
     public static AnimationTimer timer;
 
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
-    }
-
     @Override
     public void start(Stage stage) {
         stage.setTitle("Bomberman Game");
@@ -42,7 +36,6 @@ public class BombermanGame extends Application {
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.initStyle(StageStyle.UNDECORATED);
-
 
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();

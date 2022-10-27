@@ -21,9 +21,7 @@ public class Game {
     public Button exit = new Button("EXIT");
 
     public static Map mapGame = new Map();
-
-    private final List<Entity> entities = new ArrayList<>();
-
+    public static final List<Entity> entities = new ArrayList<>();
     public static final List<Bomb> bombs = new ArrayList<>();
     private final List<Entity> stillObjects = new ArrayList<>();
 
@@ -115,6 +113,7 @@ public class Game {
 
     public void update() {
         entities.forEach(Entity::update);
+        bombs.forEach(Bomb::update);
     }
 
     public void render() {
@@ -176,7 +175,6 @@ public class Game {
         int bomberX2 = bomberX1 + Sprite.SCALED_SIZE - 1;
         int bomberY1 = Bomber.coordinatesY + 1;
         int bomberY2 = bomberY1 + Sprite.SCALED_SIZE - 1;
-
         for (int i = 1; i < entities.size(); ++i) {
 
             int monsterX1 = entities.get(i).getLocation_x() + 4;
