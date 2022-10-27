@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import static uet.oop.bomberman.Game.bombs;
 import static uet.oop.bomberman.Game.mapGame;
 
 import java.util.Arrays;
@@ -42,9 +43,10 @@ public class Bomb extends Entity {
                 (Bomber.coordinatesX + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,
                 (Bomber.coordinatesY + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,
                 Sprite.bomb.getFxImage());
-            Game.bombs.add(bomb);
+            bombs.add(bomb);
             time_bomb = System.currentTimeMillis();
             time_tmp = time_bomb;
+            bomb.countDownToExplosion();
         }
     }
 
@@ -122,16 +124,16 @@ public class Bomb extends Entity {
         time_bomb = System.currentTimeMillis();
         time_tmp = time_bomb;
         swap_active = 0;
-        try {
-            Game.bombs.remove(bomb);
-        } catch (Exception e) {
-            System.out.println(1);
+            //Game.bombs.remove(bomb);
+        for (int i = 0; i < bombs.size(); ++i) {
+            bombs.remove(i);
+            --i;
         }
         number_bomb ++;
     }
 
     @Override
     public void update() {
-        countDownToExplosion();
+
     }
 }
