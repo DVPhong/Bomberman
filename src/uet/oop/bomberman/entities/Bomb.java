@@ -17,18 +17,17 @@ public class Bomb extends Entity {
   private static long time_bomb;
   private static long time_tmp;
   private static Bomb bomb;
-
-  public static void setNumber_bomb(int number_bomb) {
-    Bomb.number_bomb = number_bomb;
-  }
-
   private static int number_bomb = 1;
-  private static final int power_bomb = 1; // Số ô bom phá theo 1 hướng
+  private static int power_bomb = 1; // Số ô bom phá theo 1 hướng
   private static int swap_active = 0;
   private static int isPlaceBomb = 0;
 
   public Bomb(int x, int y, Image img) {
     super(x, y, img);
+  }
+
+  public static void setNumber_bomb(int number_bomb) {
+    Bomb.number_bomb = number_bomb;
   }
 
   public static void keyBomb() {
@@ -41,7 +40,6 @@ public class Bomb extends Entity {
     BombermanGame.scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent);
   }
 
-
   public static void placeBomb() {
     if (number_bomb > 0) {
       number_bomb--;
@@ -52,7 +50,7 @@ public class Bomb extends Entity {
       bombs.add(bomb);
       time_bomb = System.currentTimeMillis();
       time_tmp = time_bomb;
-      isPlaceBomb++;
+      //isPlaceBomb++;
     }
   }
 
@@ -68,7 +66,7 @@ public class Bomb extends Entity {
           bomb.setImg(Sprite.bomb_1.getFxImage());
           swap_active = 2;
         } else if (swap_active == 2) {
-          bomb.setImg(Sprite.bomb_2.getFxImage());
+          bomb.setImg(Sprite.bomb_exploded1.getFxImage());
           Explosion();
         }
       }
@@ -85,6 +83,7 @@ public class Bomb extends Entity {
 
     flames[0] = new Flame(x, y, Sprite.explosion_horizontal1.getFxImage());
     flames[1 + 4 * power_bomb] = new Flame(x, y, Sprite.explosion_vertical1.getFxImage());
+
     for (int i = 1; i < 1 + 4 * power_bomb; i++) {
       if (i % 4 == 1 && i != 4 * power_bomb - 3) {
         flames[i] = new Flame(x + 1 + i / 4, y, Sprite.explosion_horizontal1.getFxImage());
@@ -109,16 +108,22 @@ public class Bomb extends Entity {
     }
 
     for (Flame a : flames) {
-      char position = mapGame.getMap((a.location_y+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,
-          (a.location_x+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE  - 2);
+      char position = mapGame.getMap(
+          (a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+          (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
       if (position == '#') {
         a.setImg(Sprite.wall.getFxImage());
+      } else if (position == '*') {
+        // Xoa brick tai vi tri flame a
+        Game.stillObjects.removeIf(brick -> brick.getLocation_x()
+//            == (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE
+//            && brick.getLocation_y() == (a.location_y+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+            == a.getLocation_x() && brick.getLocation_y() == a.getLocation_y());
       }
     }
-
     try {
       Game.entities.addAll(Arrays.asList(flames).subList(0, 2 + 4 * power_bomb));
-    } catch (ArrayIndexOutOfBoundsException e) {
+    } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
@@ -133,13 +138,12 @@ public class Bomb extends Entity {
       --i;
     }
     number_bomb++;
-    isPlaceBomb--;
+    //isPlaceBomb--;
   }
 
   @Override
   public void update() {
-    if (isPlaceBomb > 0) {
+    //if (isPlaceBomb > 0)
       countDownToExplosion();
-    }
   }
 }

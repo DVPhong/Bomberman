@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    Text lever = new Text(8, 43, "LEVER: " + mapGame.mapLever);
+    Text lever = new Text(8, 43, "LEVER: " + Map.mapLever);
     Text items = new Text(160, 43, "ITEM: ");
     public Button setting = new Button("SETTING");
     public Button exit = new Button("EXIT");
@@ -23,7 +23,7 @@ public class Game {
     public static Map mapGame = new Map();
     public static final List<Entity> entities = new ArrayList<>();
     public static final List<Bomb> bombs = new ArrayList<>();
-    private final List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
     private void textSet(Text text) {
         text.setFont(Font.font(20));
@@ -78,6 +78,8 @@ public class Game {
                     case '*':
                         object = new Brick(j, i);
                         stillObjects.add(object);
+//                       object = new Grass(j,i);
+//                       stillObjects.add(object);
                         break;
                     case 'p':
                         object = new Bomber(j, i, Sprite.player_right.getFxImage());

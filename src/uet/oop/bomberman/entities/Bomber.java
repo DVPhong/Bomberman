@@ -55,6 +55,7 @@ public class Bomber extends Entity {
     private void updateImg() {
         switch (go) {
             case 'A':
+                this.img = Sprite.player_left.getFxImage();
                 if (count_img % 30 == 0) {
                     this.img = Sprite.player_left.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -64,6 +65,7 @@ public class Bomber extends Entity {
                 }
                 break;
             case 'D':
+                this.img = Sprite.player_right.getFxImage();
                 if (count_img % 30 == 0) {
                     this.img = Sprite.player_right.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -73,6 +75,7 @@ public class Bomber extends Entity {
                 }
                 break;
             case 'S':
+                this.img = Sprite.player_down.getFxImage();
                 if (count_img % 30 == 0) {
                     this.img = Sprite.player_down.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -82,6 +85,7 @@ public class Bomber extends Entity {
                 }
                 break;
             case 'W':
+                this.img = Sprite.player_up.getFxImage();
                 if (count_img % 30 == 0) {
                     this.img = Sprite.player_up.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -175,6 +179,6 @@ public class Bomber extends Entity {
     }
 
     public void setImg(Image image) {
-        this.img = image;
+        img = image;
     }
 }
