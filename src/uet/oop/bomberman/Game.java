@@ -23,7 +23,7 @@ public class Game {
     public static Map mapGame = new Map();
     public static final List<Entity> entities = new ArrayList<>();
     public static final List<Bomb> bombs = new ArrayList<>();
-    public static List<Entity> stillObjects = new ArrayList<>();
+    public static final List<Entity> stillObjects = new ArrayList<>();
 
     private void textSet(Text text) {
         text.setFont(Font.font(20));

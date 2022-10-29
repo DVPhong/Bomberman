@@ -20,7 +20,7 @@ public class Bomb extends Entity {
   private static int number_bomb = 1;
   private static int power_bomb = 1; // Số ô bom phá theo 1 hướng
   private static int swap_active = 0;
-  private static int isPlaceBomb = 0;
+  private static int isPlaceBomb = 1;
 
   public Bomb(int x, int y, Image img) {
     super(x, y, img);
@@ -113,14 +113,16 @@ public class Bomb extends Entity {
           (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
       if (position == '#') {
         a.setImg(Sprite.wall.getFxImage());
-      } else if (position == '*') {
-        // Xoa brick tai vi tri flame a
-        Game.stillObjects.removeIf(brick -> brick.getLocation_x()
-//            == (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE
-//            && brick.getLocation_y() == (a.location_y+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
-            == a.getLocation_x() && brick.getLocation_y() == a.getLocation_y());
       }
+//      else if (position == '*') {
+//        // Xoa brick tai vi tri flame a
+//        Game.stillObjects.removeIf(brick -> brick.getLocation_x()
+////            == (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE
+////            && brick.getLocation_y() == (a.location_y+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+//            == a.getLocation_x() && brick.getLocation_y() == a.getLocation_y());
+//      }
     }
+
     try {
       Game.entities.addAll(Arrays.asList(flames).subList(0, 2 + 4 * power_bomb));
     } catch (Exception e) {
@@ -137,6 +139,7 @@ public class Bomb extends Entity {
       bombs.remove(i);
       --i;
     }
+
     number_bomb++;
     //isPlaceBomb--;
   }
