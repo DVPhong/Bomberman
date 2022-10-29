@@ -20,7 +20,8 @@ public class Bomb extends Entity {
   private static int number_bomb = 1;
   private static int power_bomb = 1; // Số ô bom phá theo 1 hướng
   private static int swap_active = 0;
-  private static int isPlaceBomb = 1;
+  //private static int isPlaceBomb = 1;
+  public static int number_bomb_placed = -1;
 
   public Bomb(int x, int y, Image img) {
     super(x, y, img);
@@ -51,6 +52,7 @@ public class Bomb extends Entity {
       time_bomb = System.currentTimeMillis();
       time_tmp = time_bomb;
       //isPlaceBomb++;
+      number_bomb_placed ++;
     }
   }
 
@@ -135,18 +137,15 @@ public class Bomb extends Entity {
     time_bomb = System.currentTimeMillis();
     time_tmp = time_bomb;
     swap_active = 0;
-    for (int i = 0; i < bombs.size(); ++i) {
-      bombs.remove(i);
-      --i;
-    }
 
-    number_bomb++;
-    //isPlaceBomb--;
+    bomb.setX(50 *Sprite.SCALED_SIZE);
+    bomb.setY(50* Sprite.SCALED_SIZE);
+    number_bomb ++;
+    number_bomb_placed --;
   }
 
   @Override
   public void update() {
-    //if (isPlaceBomb > 0)
-      countDownToExplosion();
+      if (number_bomb_placed >= 0) countDownToExplosion();
   }
 }
