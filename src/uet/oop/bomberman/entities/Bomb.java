@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities;
 
 import static uet.oop.bomberman.Game.bombs;
+import static uet.oop.bomberman.Game.entities;
 import static uet.oop.bomberman.Game.mapGame;
+import static uet.oop.bomberman.Game.stillObjects;
 
 import java.util.Arrays;
 import javafx.event.EventHandler;
@@ -117,11 +119,12 @@ public class Bomb extends Entity {
         a.setImg(Sprite.wall.getFxImage());
       }
 //      else if (position == '*') {
-//        // Xoa brick tai vi tri flame a
-//        Game.stillObjects.removeIf(brick -> brick.getLocation_x()
-////            == (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE
-////            && brick.getLocation_y() == (a.location_y+ Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
-//            == a.getLocation_x() && brick.getLocation_y() == a.getLocation_y());
+//          mapGame.setMap((a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+//              (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, ' ');
+//        }
+
+//      else if (position == '1') {
+//        entities.removeIf(i -> i instanceof Balloom);
 //      }
     }
 
@@ -133,6 +136,22 @@ public class Bomb extends Entity {
   }
 
   public void afterExplosion() {
+    for (Entity a : entities) {
+      if (a instanceof Flame) {
+        char position = mapGame.getMap(
+            (a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+            (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+        if (position == '*') {
+          mapGame.setMap((a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+              (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, ' ');
+          for (Entity b :stillObjects) {
+            if (b instanceof Brick && b.getLocation_x() == a.getLocation_x() && b.getLocation_y() == a.getLocation_y()) {
+              b.setImg(Sprite.grass.getFxImage());
+            }
+          }
+        }
+      }
+    }
     Game.entities.removeIf(i -> i instanceof Flame);
     time_bomb = System.currentTimeMillis();
     time_tmp = time_bomb;
@@ -140,6 +159,7 @@ public class Bomb extends Entity {
 
     bomb.setX(50 *Sprite.SCALED_SIZE);
     bomb.setY(50* Sprite.SCALED_SIZE);
+
     number_bomb ++;
     number_bomb_placed --;
   }

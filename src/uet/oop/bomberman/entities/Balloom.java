@@ -6,7 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Balloom extends Entity {
-    private final int balloomSpeed = 2;
+    private final int balloomSpeed = 0;
 
     public Balloom(int x, int y, Image img) {
         super(x, y, img);
