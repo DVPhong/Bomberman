@@ -55,6 +55,9 @@ public class Bomb extends Entity {
                     (Bomber.coordinatesY + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,
                     Sprite.bomb.getFxImage());
             bombs.add(bomb);
+            BombermanGame.game.mapGame.setMap(
+                (bomb.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+                (bomb.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,'m');
             time_bomb = System.currentTimeMillis();
             time_tmp = time_bomb;
             number_bomb_placed++;
@@ -179,6 +182,9 @@ public class Bomb extends Entity {
         bomb.setX(50 * Sprite.SCALED_SIZE);
         bomb.setY(50 * Sprite.SCALED_SIZE);
 
+        BombermanGame.game.mapGame.setMap(
+            (bomb.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+            (bomb.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,' ');
         number_bomb++;
         number_bomb_placed--;
     }
