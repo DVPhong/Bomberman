@@ -7,7 +7,8 @@ import java.io.FileReader;
 public class Map {
     private char[][] map;
 
-    public static int mapLever = 2;
+    public static int maxLevel = 2;
+    public int mapLevel = 1;
 
     public static int r = 0;
 
@@ -27,7 +28,7 @@ public class Map {
     }
 
     public void upMap() {
-        String mapName = "Level" + mapLever + ".txt";
+        String mapName = "Level" + mapLevel + ".txt";
         try {
             File file = new File("res/levels/" + mapName);
             FileReader input = new FileReader(file);

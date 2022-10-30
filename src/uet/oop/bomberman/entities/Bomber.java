@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.graphics.Sprite;
 
 
@@ -14,27 +15,34 @@ public class Bomber extends Entity {
     private int bomberSpeed = 2;
     EventHandler<KeyEvent> keyDownBomber;
     EventHandler<KeyEvent> keyUpBomber;
+    private char goTest = ' ';
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         keyDownBomber = event -> {
             switch (event.getCode()) {
                 case A:
-                    go = 'A';
+                    goTest = 'A';
                     break;
                 case D:
-                    go = 'D';
+                    goTest = 'D';
                     break;
                 case S:
-                    go = 'S';
+                    goTest = 'S';
                     break;
                 case W:
-                    go = 'W';
+                    goTest = 'W';
                     break;
+            }
+            if (!Sound.bomberGo.isPlaying()) {
+                Sound.bomberGo.play();
             }
         };
         BombermanGame.game.scene.addEventFilter(KeyEvent.KEY_PRESSED, keyDownBomber);
-        keyUpBomber = event -> go = ' ';
+        keyUpBomber = event -> {
+            go = ' ';
+            goTest = ' ';
+        };
         BombermanGame.game.scene.addEventFilter(KeyEvent.KEY_RELEASED, keyUpBomber);
     }
 
@@ -43,13 +51,12 @@ public class Bomber extends Entity {
         updateImg();
         entityCollide();
         y = location_y;
-        go = ' ';
         coordinatesX = location_x;
         coordinatesY = location_y;
     }
 
     private void updateImg() {
-        switch (go) {
+        switch (goTest) {
             case 'A':
                 if (count_img % 30 == 0) {
                     this.img = Sprite.player_left.getFxImage();
@@ -93,7 +100,7 @@ public class Bomber extends Entity {
     private void updateGo() {
         int _x = location_x;
         int _y = location_y;
-        switch (go) {
+        switch (goTest) {
             case 'A':
                 _x -= bomberSpeed;
                 break;
@@ -118,52 +125,56 @@ public class Bomber extends Entity {
         int _y2 = (_y + Sprite.SCALED_SIZE - 10) / Sprite.SCALED_SIZE - 2;
         int _x2 = (_x + Sprite.SCALED_SIZE - 10) / Sprite.SCALED_SIZE;
 
-        switch (go) {
+        switch (goTest) {
             case 'A': {
-                if (Game.mapGame.getMap(_y1, x1) == ' ' && Game.mapGame.getMap(y2, x1) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(_y1, x1) == ' ' && BombermanGame.game.mapGame.getMap(y2, x1) != ' ') {
                     location_y -= bomberSpeed;
                     go = 'W';
-                } else if (Game.mapGame.getMap(y1, x1) != ' ' && Game.mapGame.getMap(_y2, x1) == ' ') {
+                } else if (BombermanGame.game.mapGame.getMap(y1, x1) != ' ' && BombermanGame.game.mapGame.getMap(_y2, x1) == ' ') {
                     location_y += bomberSpeed;
                     go = 'S';
                 } else {
                     location_x -= bomberSpeed;
+                    go = goTest;
                 }
                 break;
             }
             case 'D': {
-                if (Game.mapGame.getMap(_y1, x2) == ' ' && Game.mapGame.getMap(y2, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(_y1, x2) == ' ' && BombermanGame.game.mapGame.getMap(y2, x2) != ' ') {
                     location_y -= bomberSpeed;
                     go = 'W';
-                } else if (Game.mapGame.getMap(y1, x2) != ' ' && Game.mapGame.getMap(_y2, x2) == ' ') {
+                } else if (BombermanGame.game.mapGame.getMap(y1, x2) != ' ' && BombermanGame.game.mapGame.getMap(_y2, x2) == ' ') {
                     location_y += bomberSpeed;
                     go = 'S';
                 } else {
                     location_x += bomberSpeed;
+                    go = goTest;
                 }
                 break;
             }
             case 'W': {
-                if (Game.mapGame.getMap(y1, _x1) == ' ' && Game.mapGame.getMap(y1, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y1, _x1) == ' ' && BombermanGame.game.mapGame.getMap(y1, x2) != ' ') {
                     location_x -= bomberSpeed;
                     go = 'A';
-                } else if (Game.mapGame.getMap(y1, x1) != ' ' && Game.mapGame.getMap(y1, _x2) == ' ') {
+                } else if (BombermanGame.game.mapGame.getMap(y1, x1) != ' ' && BombermanGame.game.mapGame.getMap(y1, _x2) == ' ') {
                     location_x += bomberSpeed;
                     go = 'D';
                 } else {
                     location_y -= bomberSpeed;
+                    go = goTest;
                 }
                 break;
             }
             case 'S': {
-                if (Game.mapGame.getMap(y2, _x1) == ' ' && Game.mapGame.getMap(y2, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y2, _x1) == ' ' && BombermanGame.game.mapGame.getMap(y2, x2) != ' ') {
                     location_x -= bomberSpeed;
                     go = 'A';
-                } else if (Game.mapGame.getMap(y2, x1) != ' ' && Game.mapGame.getMap(y2, _x2) == ' ') {
+                } else if (BombermanGame.game.mapGame.getMap(y2, x1) != ' ' && BombermanGame.game.mapGame.getMap(y2, _x2) == ' ') {
                     location_x += bomberSpeed;
                     go = 'D';
                 } else {
                     location_y += bomberSpeed;
+                    go = goTest;
                 }
                 break;
             }

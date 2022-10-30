@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
@@ -11,7 +11,7 @@ public abstract class Entity {
     protected int location_y;
     protected int x;
     protected int y;
-    protected Image img;
+    public Image img;
 
     protected char go = ' ';
 
@@ -54,32 +54,32 @@ public abstract class Entity {
     }
 
     public void entityCollide() {
-        int x1 = (location_x + 2) / Sprite.SCALED_SIZE;
-        int y1 = (location_y + 2) / Sprite.SCALED_SIZE - 2;
-        int y2 = (location_y + Sprite.SCALED_SIZE - 2) / Sprite.SCALED_SIZE - 2;
-        int x2 = (location_x + Sprite.SCALED_SIZE - 2) / Sprite.SCALED_SIZE;
+        int x1 = (location_x + 1) / Sprite.SCALED_SIZE;
+        int y1 = (location_y + 1) / Sprite.SCALED_SIZE - 2;
+        int y2 = (location_y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE - 2;
+        int x2 = (location_x + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE;
 
         switch (go) {
             case 'A': {
-                if (Game.mapGame.getMap(y1, x1) != ' ' || Game.mapGame.getMap(y2, x1) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y1, x1) != ' ' || BombermanGame.game.mapGame.getMap(y2, x1) != ' ') {
                     location_x = (x1 + 1) * Sprite.SCALED_SIZE;
                 }
                 break;
             }
             case 'D': {
-                if (Game.mapGame.getMap(y1, x2) != ' ' || Game.mapGame.getMap(y2, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y1, x2) != ' ' || BombermanGame.game.mapGame.getMap(y2, x2) != ' ') {
                     location_x = (x2 - 1) * Sprite.SCALED_SIZE;
                 }
                 break;
             }
             case 'W': {
-                if (Game.mapGame.getMap(y1, x1) != ' ' || Game.mapGame.getMap(y1, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y1, x1) != ' ' || BombermanGame.game.mapGame.getMap(y1, x2) != ' ') {
                     location_y = (y1 + 3) * Sprite.SCALED_SIZE;
                 }
                 break;
             }
             case 'S': {
-                if (Game.mapGame.getMap(y2, x1) != ' ' || Game.mapGame.getMap(y2, x2) != ' ') {
+                if (BombermanGame.game.mapGame.getMap(y2, x1) != ' ' || BombermanGame.game.mapGame.getMap(y2, x2) != ' ') {
                     location_y = (y2 + 1) * Sprite.SCALED_SIZE;
                 }
                 break;

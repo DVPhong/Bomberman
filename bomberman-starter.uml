@@ -5,9 +5,9 @@
   <nodes>
     <node x="763.0" y="2506.0">uet.oop.bomberman.Main</node>
     <node x="292.0" y="597.5">uet.oop.bomberman.entities.Wall</node>
-    <node x="546.0" y="2506.0">uet.oop.bomberman.StageSetting</node>
+    <node x="546.0" y="2506.0">uet.oop.bomberman.Stage.StageSetting</node>
     <node x="353.0" y="2506.0">uet.oop.bomberman.Sound</node>
-    <node x="-84.0" y="2506.0">uet.oop.bomberman.Menu</node>
+    <node x="-84.0" y="2506.0">uet.oop.bomberman.Stage.Menu</node>
     <node x="-84.0" y="-15.0">uet.oop.bomberman.graphics.Sprite</node>
     <node x="1460.0" y="597.5">uet.oop.bomberman.entities.Grass</node>
     <node x="1827.0" y="-15.0">uet.oop.bomberman.Game</node>

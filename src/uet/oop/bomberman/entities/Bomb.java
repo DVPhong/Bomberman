@@ -2,10 +2,11 @@ package uet.oop.bomberman.entities;
 
 import static uet.oop.bomberman.Game.bombs;
 import static uet.oop.bomberman.Game.entities;
-import static uet.oop.bomberman.Game.mapGame;
 import static uet.oop.bomberman.Game.stillObjects;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -13,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.Sound;
+import uet.oop.bomberman.entities.Monsters.Ball;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {
@@ -21,7 +23,7 @@ public class Bomb extends Entity {
     private static long time_tmp;
     private static Bomb bomb;
 
-    public static int power_bomb = 1;
+    public static int power_bomb = 2;
     private static int swap_active = 0;
     private static int isPlaceBomb = 1;
     public static int number_bomb = 1;
@@ -31,7 +33,7 @@ public class Bomb extends Entity {
         super(x, y, img);
     }
 
-
+    public static List<Flame> enn = new ArrayList<>();
     public static void keyBomb() {
         EventHandler<KeyEvent> keyEvent;
         keyEvent = event -> {
@@ -54,7 +56,7 @@ public class Bomb extends Entity {
             time_bomb = System.currentTimeMillis();
             time_tmp = time_bomb;
             //isPlaceBomb++;
-            number_bomb_placed ++;
+            number_bomb_placed++;
         }
     }
 
@@ -111,12 +113,24 @@ public class Bomb extends Entity {
             }
         }
 
-        for (Flame a : flames) {
-            char position = mapGame.getMap(
-                    (a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
-                    (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+        for (int i = 0; i < flames.length; i++) {
+            char position = BombermanGame.game.mapGame.getMap(
+                    (flames[i].location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+                    (flames[i].location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
             if (position == '#') {
-                a.img = Sprite.wall.getFxImage();
+                flames[i].img = Sprite.wall.getFxImage();
+                if (i + 4 < flames.length) {
+                    char pos = BombermanGame.game.mapGame.getMap(
+                            (flames[i + 4].location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+                            (flames[i + 4].location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+                    if (pos == '#')
+                        flames[i + 4].img = Sprite.wall.getFxImage();
+                    else if (pos == '*') {
+                        flames[i + 4].img = Sprite.brick.getFxImage();
+                        enn.add(flames[i+4]);}
+                    else if (pos == ' ')
+                        flames[i + 4].img = Sprite.grass.getFxImage();
+                }
             }
         }
 
@@ -129,16 +143,27 @@ public class Bomb extends Entity {
 
     public void afterExplosion() {
         for (Entity a : entities) {
-            if (a instanceof Flame) {
-                char position = mapGame.getMap(
+            if (a instanceof Flame && !enn.contains(a))  {
+                char position = BombermanGame.game.mapGame.getMap(
                         (a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
                         (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
+
                 if (position == '*') {
-                    mapGame.setMap((a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
+                    BombermanGame.game.mapGame.setMap((a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
                             (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, ' ');
                     for (Entity b : stillObjects) {
                         if (b.getLocation_x() == a.getLocation_x() && b.getLocation_y() == a.getLocation_y()) {
                             b.img = Sprite.grass.getFxImage();
+                        }
+                    }
+                }
+
+                for (int i = 1; i < entities.size(); i++) {
+                    if (entities.get(i) instanceof Ball) {
+                        if (entities.get(i).getLocation_x() == a.getLocation_x()
+                                && entities.get(i).getLocation_y() == a.getLocation_y()) {
+                            entities.set(i, new Flame(a.getLocation_x(), a.getLocation_y(),
+                                    Sprite.balloom_dead.getFxImage()));
                         }
                     }
                 }
@@ -149,11 +174,11 @@ public class Bomb extends Entity {
         time_tmp = time_bomb;
         swap_active = 0;
 
-        bomb.setX(50 *Sprite.SCALED_SIZE);
-        bomb.setY(50* Sprite.SCALED_SIZE);
+        bomb.setX(50 * Sprite.SCALED_SIZE);
+        bomb.setY(50 * Sprite.SCALED_SIZE);
 
-        number_bomb ++;
-        number_bomb_placed --;
+        number_bomb++;
+        number_bomb_placed--;
     }
 
     @Override

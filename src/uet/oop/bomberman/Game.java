@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    Text lever = new Text(8, 43, "LEVER: " + mapGame.mapLever);
+    Text lever = new Text(8, 43, "LEVER: ");
     Text item = new Text(160, 43, "ITEM: ");
     public Button setting = new Button("SETTING");
     public Button exit = new Button("EXIT");
@@ -34,7 +34,8 @@ public class Game {
 
     public Scene scene;
 
-    public static Map mapGame = new Map();
+    public Map mapGame = new Map();
+    private final List<Portal> portals = new ArrayList<>();
 
     public static final List<Entity> entities = new ArrayList<>();
 
@@ -64,6 +65,8 @@ public class Game {
         });
     }
 
+    private void gameBottom() {
+    }
 
     public Game() {
         setting.setLayoutY(0);
@@ -109,6 +112,13 @@ public class Game {
                         stillObjects.add(object);
                         break;
                     }
+                    case 'x': {
+                        Portal portal = new Portal(j, i);
+                        portals.add(portal);
+                        object = new Tiles(j, i, Sprite.brick.getFxImage());
+                        stillObjects.add(object);
+                        break;
+                    }
                     case 'p':
                         object = new Bomber(j, i, Sprite.player_right.getFxImage());
                         entities.add(object);
@@ -137,25 +147,22 @@ public class Game {
                     case 'b': {
                         BombItem bombItem = new BombItem(j, i);
                         items.add(bombItem);
-                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        object = new Tiles(j, i, Sprite.brick.getFxImage());
                         stillObjects.add(object);
-                        mapGame.setMap(i - 2, j, ' ');
                         break;
                     }
                     case 'f': {
                         FlameItem flameItem = new FlameItem(j, i);
                         items.add(flameItem);
-                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        object = new Tiles(j, i, Sprite.brick.getFxImage());
                         stillObjects.add(object);
-                        mapGame.setMap(i - 2, j, ' ');
                         break;
                     }
                     case 's': {
                         SpeedItem speedItem = new SpeedItem(j, i);
                         items.add(speedItem);
-                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        object = new Tiles(j, i, Sprite.brick.getFxImage());
                         stillObjects.add(object);
-                        mapGame.setMap(i - 2, j, ' ');
                         break;
                     }
                     default: {
@@ -183,16 +190,19 @@ public class Game {
             bombs.forEach(g -> g.setX(Sprite.SCALED_SIZE * (BombermanGame.WIDTH - 1) / 2 - Bomber.coordinatesX + g.getLocation_x()));
             entities.forEach(g -> g.setX(g.getLocation_x() - (Bomber.coordinatesX - Sprite.SCALED_SIZE * (BombermanGame.WIDTH - 1) / 2)));
             items.forEach(g -> g.setX(Sprite.SCALED_SIZE * (BombermanGame.WIDTH - 1) / 2 - Bomber.coordinatesX + g.getLocation_x()));
+            portals.forEach(g -> g.setX(Sprite.SCALED_SIZE * (BombermanGame.WIDTH - 1) / 2 - Bomber.coordinatesX + g.getLocation_x()));
         } else {
             stillObjects.forEach(g -> g.setX(g.getLocation_x() - Sprite.SCALED_SIZE * (Map.c - BombermanGame.WIDTH)));
             bombs.forEach(g -> g.setX(g.getLocation_x() - Sprite.SCALED_SIZE * (Map.c - BombermanGame.WIDTH)));
             entities.forEach(g -> g.setX(g.getLocation_x() - Sprite.SCALED_SIZE * (Map.c - BombermanGame.WIDTH)));
             items.forEach(g -> g.setX(g.getLocation_x() - Sprite.SCALED_SIZE * (Map.c - BombermanGame.WIDTH)));
+            portals.forEach(g -> g.setX(g.getLocation_x() - Sprite.SCALED_SIZE * (Map.c - BombermanGame.WIDTH)));
         }
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
-        bombs.forEach(g -> g.render(gc));
         items.forEach(g -> g.render(gc));
+        portals.forEach(g -> g.render(gc));
+        stillObjects.forEach(g -> g.render(gc));
+        bombs.forEach(g -> g.render(gc));
+        entities.forEach(g -> g.render(gc));
     }
 
     public void downDataGame() {
@@ -251,13 +261,43 @@ public class Game {
                         || items.get(i) instanceof FlameItem) {
                     j = i;
                     ok = true;
+                    stillObjects.get(((monsterY1 / Sprite.SCALED_SIZE) - 2) * Map.c
+                            + monsterX1 / Sprite.SCALED_SIZE).img = Sprite.grass.getFxImage();
                     Sound.itemWav.play();
                     break;
                 }
             }
         }
-        if (ok) items.get(j).update();
+        if (ok) {
+            items.get(j).update();
+        }
         return true;
+    }
+
+    public boolean checkVictory() {
+        if (entities.size() > 1) {
+            return false;
+        }
+
+        int bomberX1 = Bomber.coordinatesX + 1;
+        int bomberX2 = bomberX1 + Sprite.SCALED_SIZE - 1;
+        int bomberY1 = Bomber.coordinatesY + 1;
+        int bomberY2 = bomberY1 + Sprite.SCALED_SIZE - 1;
+
+        for (Portal portal : portals) {
+            int monsterX1 = portal.getLocation_x() + 4;
+            int monsterX2 = monsterX1 + Sprite.SCALED_SIZE - 4;
+            int monsterY1 = portal.getLocation_y() + 4;
+            int monsterY2 = monsterY1 + Sprite.SCALED_SIZE - 4;
+
+            if (((bomberX1 < monsterX1 && monsterX1 < bomberX2)
+                    || (bomberX1 < monsterX2 && monsterX2 < bomberX2))
+                    && ((bomberY1 < monsterY1 && monsterY1 < bomberY2)
+                    || (bomberY1 < monsterY2 && monsterY2 < bomberY2))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void resetGame() {
