@@ -26,9 +26,8 @@ public class Bomb extends Entity {
     private static long time_tmp;
     private static Bomb bomb;
 
-    public static int power_bomb = 2;
+    public static int power_bomb = 1;
     private static int swap_active = 0;
-    private static int isPlaceBomb = 1;
     public static int number_bomb = 1;
     public static int number_bomb_placed = -1;
 
@@ -58,7 +57,6 @@ public class Bomb extends Entity {
             bombs.add(bomb);
             time_bomb = System.currentTimeMillis();
             time_tmp = time_bomb;
-            //isPlaceBomb++;
             number_bomb_placed++;
         }
     }
@@ -164,8 +162,8 @@ public class Bomb extends Entity {
                 for (int i = 1; i < entities.size(); i++) {
                     if (entities.get(i) instanceof Ball || entities.get(i) instanceof Min
                         || entities.get(i) instanceof Oneal || entities.get(i) instanceof Ova) {
-                        if (entities.get(i).getLocation_x() - a.getLocation_x() <= 16
-                                && entities.get(i).getLocation_y() - a.getLocation_y() <= 16) {
+                        if (Math.abs(entities.get(i).getLocation_x() - a.getLocation_x()) < Sprite.SCALED_SIZE
+                                && Math.abs(entities.get(i).getLocation_y() - a.getLocation_y()) < Sprite.SCALED_SIZE) {
                             entities.set(i, new Flame(a.getLocation_x(), a.getLocation_y(),
                                     Sprite.balloom_dead.getFxImage()));
                         }
