@@ -12,7 +12,6 @@ public class Flame extends Entity{
         if (yUnit >= 3 && yUnit <= Map.r) this.y = yUnit * Sprite.SCALED_SIZE;
         else if (yUnit < 3) this.y = 3 * Sprite.SCALED_SIZE;
         else this.y = (Map.r) * Sprite.SCALED_SIZE;
-        this.img = img;
         this.location_x = this.x;
         this.location_y = this.y;
     }
