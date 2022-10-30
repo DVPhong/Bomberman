@@ -86,4 +86,8 @@ public abstract class Entity {
             }
         }
     }
+
+    public char aStar() {
+        return  ' ';
+    }
 }

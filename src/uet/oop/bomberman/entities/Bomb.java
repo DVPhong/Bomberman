@@ -152,12 +152,16 @@ public class Bomb extends Entity {
                         (a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
                         (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE);
 
-                if (position == '*') {
+                if (position != '#') {
                     BombermanGame.game.mapGame.setMap((a.location_y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE - 2,
                             (a.location_x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, ' ');
                     for (Entity b : stillObjects) {
                         if (b.getLocation_x() == a.getLocation_x() && b.getLocation_y() == a.getLocation_y()) {
-                            b.img = Sprite.grass.getFxImage();
+                            if (position == '*' || position == ' ') {
+                                b.img = Sprite.grass.getFxImage();
+                            } else {
+                                b.img = null;
+                            }
                         }
                     }
                 }

@@ -7,7 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Ball extends Entity {
-    private final int ballSpeed = 2;
+    private final int ballSpeed = 0;
 
     public Ball(int x, int y, Image img) {
         super(x, y, img);
