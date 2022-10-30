@@ -14,14 +14,10 @@ import uet.oop.bomberman.entities.Items.BombItem;
 import uet.oop.bomberman.entities.Items.FlameItem;
 import uet.oop.bomberman.entities.Items.Item;
 import uet.oop.bomberman.entities.Items.SpeedItem;
-import uet.oop.bomberman.entities.Monsters.Ball;
-import uet.oop.bomberman.entities.Monsters.Min;
-import uet.oop.bomberman.entities.Monsters.Oneal;
-import uet.oop.bomberman.entities.Monsters.Ova;
+import uet.oop.bomberman.entities.Monsters.*;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +61,6 @@ public class Game {
             button.setTextFill(Color.rgb(0, 153, 153));
             button.setFont(Font.font(12));
         });
-    }
-
-    private void gameBottom() {
     }
 
     public Game() {
@@ -162,6 +155,14 @@ public class Game {
                         mapGame.setMap(i - 2, j, ' ');
                         break;
                     }
+                    case '5': {
+                        object = new Doll(j, i, Sprite.doll_left1.getFxImage());
+                        entities.add(object);
+                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        mapGame.setMap(i - 2, j, ' ');
+                        break;
+                    }
                     case 'b': {
                         BombItem bombItem = new BombItem(j, i);
                         items.add(bombItem);
@@ -221,23 +222,6 @@ public class Game {
         stillObjects.forEach(g -> g.render(gc));
         bombs.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
-    }
-
-    public void downDataGame() {
-        try {
-            FileWriter file = new FileWriter("res/data_game.txt");
-            StringBuilder data = new StringBuilder("0\n" + Map.r + " " + Map.c + " " + Bomber.coordinatesX + "\n");
-            for (Entity s : stillObjects) {
-                data.append(s.getLocation_x()).append(" ").append(s.getLocation_y()).append(" ").append(s.getX()).append(" ").append(s.getY()).append("\n");
-            }
-            for (Entity e : entities) {
-                data.append(e.getLocation_x()).append(" ").append(e.getLocation_y()).append(" ").append(e.getX()).append(" ").append(e.getY()).append("\n");
-            }
-            file.write(data.toString());
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean bomberCollide() {
@@ -331,6 +315,5 @@ public class Game {
             bombs.remove(i);
             --i;
         }
-        //setGame();
     }
 }

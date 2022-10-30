@@ -45,6 +45,8 @@ public class BombermanGame extends Application {
             stageSetting.settingStage.show();
         });
         menuGame.play.setOnAction(event -> {
+            game.lever.setText("LEVER: " + game.mapGame.mapLevel);
+            game.item.setText("ITEM: " + game.items.size());
             game.setGame();
             Bomb.keyBomb();
             stageSetting.settingStage.close();

@@ -1,21 +1,18 @@
 package uet.oop.bomberman.entities.Monsters;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-public class Ova extends Entity {
+public class Doll extends Entity {
+    private int dollSpeed = 1;
 
-    private final int ovaSpeed = 1;
-
-    public Ova(int x, int y, Image img) {
+    public Doll(int x, int y, Image img) {
         super(x, y, img);
     }
 
-    @Override
     public void update() {
         Random rd = new Random();
         int ok = rd.nextInt(4);
@@ -35,49 +32,54 @@ public class Ova extends Entity {
                     go = 'S';
                     break;
             }
+            char sea = search();
+            if (sea != ' ') {
+                go = sea;
+            }
         }
+
         switch (go) {
             case 'A':
-                location_x -= ovaSpeed;
+                location_x -= dollSpeed;
                 if (count_img % 30 == 0) {
-                    this.img = Sprite.ovape_left1.getFxImage();
+                    this.img = Sprite.doll_left1.getFxImage();
                 } else if (count_img % 30 == 10) {
-                    this.img = Sprite.ovape_left2.getFxImage();
+                    this.img = Sprite.doll_left2.getFxImage();
                 } else if (count_img % 30 == 20) {
-                    this.img = Sprite.ovape_left3.getFxImage();
+                    this.img = Sprite.doll_left3.getFxImage();
                 }
                 count_img += 4;
                 break;
             case 'D':
-                location_x += ovaSpeed;
+                location_x += dollSpeed;
                 if (count_img % 30 == 0) {
-                    this.img = Sprite.ovape_right1.getFxImage();
+                    this.img = Sprite.doll_left1.getFxImage();
                 } else if (count_img % 30 == 10) {
-                    this.img = Sprite.ovape_right2.getFxImage();
+                    this.img = Sprite.doll_left2.getFxImage();
                 } else if (count_img % 30 == 20) {
-                    this.img = Sprite.ovape_right3.getFxImage();
+                    this.img = Sprite.doll_left3.getFxImage();
                 }
                 count_img += 4;
                 break;
             case 'W':
-                location_y -= ovaSpeed;
+                location_y -= dollSpeed;
                 if (count_img % 30 == 0) {
-                    this.img = Sprite.ovape_right1.getFxImage();
+                    this.img = Sprite.doll_left1.getFxImage();
                 } else if (count_img % 30 == 10) {
-                    this.img = Sprite.ovape_right2.getFxImage();
+                    this.img = Sprite.doll_left2.getFxImage();
                 } else if (count_img % 30 == 20) {
-                    this.img = Sprite.ovape_right3.getFxImage();
+                    this.img = Sprite.doll_left3.getFxImage();
                 }
                 count_img += 4;
                 break;
             case 'S':
-                location_y += ovaSpeed;
+                location_y += dollSpeed;
                 if (count_img % 30 == 0) {
-                    this.img = Sprite.ovape_left1.getFxImage();
+                    this.img = Sprite.doll_left1.getFxImage();
                 } else if (count_img % 30 == 10) {
-                    this.img = Sprite.ovape_left2.getFxImage();
+                    this.img = Sprite.doll_left2.getFxImage();
                 } else if (count_img % 30 == 20) {
-                    this.img = Sprite.ovape_left3.getFxImage();
+                    this.img = Sprite.doll_left3.getFxImage();
                 }
                 count_img += 4;
                 break;

@@ -86,4 +86,71 @@ public abstract class Entity {
             }
         }
     }
+
+    public void entityCollide2() {
+        int x1 = (location_x + 1) / Sprite.SCALED_SIZE;
+        int y1 = (location_y + 1) / Sprite.SCALED_SIZE - 2;
+        int y2 = (location_y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE - 2;
+        int x2 = (location_x + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE;
+
+        switch (go) {
+            case 'A': {
+                if ((BombermanGame.game.mapGame.getMap(y1, x1) != ' ' && BombermanGame.game.mapGame.getMap(y1, x1) != '*')
+                        || (BombermanGame.game.mapGame.getMap(y2, x1) != ' ' && BombermanGame.game.mapGame.getMap(y2, x1) != '*')) {
+                    location_x = (x1 + 1) * Sprite.SCALED_SIZE;
+                }
+                break;
+            }
+            case 'D': {
+                if ((BombermanGame.game.mapGame.getMap(y1, x2) != ' ' && BombermanGame.game.mapGame.getMap(y1, x2) != '*')
+                        || (BombermanGame.game.mapGame.getMap(y2, x2) != ' ' && BombermanGame.game.mapGame.getMap(y2, x2) != '*')) {
+                    location_x = (x2 - 1) * Sprite.SCALED_SIZE;
+                }
+                break;
+            }
+            case 'W': {
+                if ((BombermanGame.game.mapGame.getMap(y1, x1) != ' ' && BombermanGame.game.mapGame.getMap(y1, x1) != '*')
+                        || (BombermanGame.game.mapGame.getMap(y1, x2) != ' ' && BombermanGame.game.mapGame.getMap(y1, x2) != '*')) {
+                    location_y = (y1 + 3) * Sprite.SCALED_SIZE;
+                }
+                break;
+            }
+            case 'S': {
+                if ((BombermanGame.game.mapGame.getMap(y2, x1) != ' ' && BombermanGame.game.mapGame.getMap(y2, x1) != '*')
+                        || (BombermanGame.game.mapGame.getMap(y2, x2) != ' ' && BombermanGame.game.mapGame.getMap(y2, x2) != '*')) {
+                    location_y = (y2 + 1) * Sprite.SCALED_SIZE;
+                }
+                break;
+            }
+        }
+    }
+
+    public char search() {
+        if (Math.sqrt(Math.pow((Bomber.coordinatesX - location_x) * 1.0 / Sprite.SCALED_SIZE, 2.0)
+                + Math.pow((Bomber.coordinatesY- location_y) * 1.0 / Sprite.SCALED_SIZE, 2)) < 7) {
+            double cos = cos(Bomber.coordinatesX - location_x, Bomber.coordinatesY - location_y);
+            if (Bomber.coordinatesY > location_y) {
+                if (cos > 0.7071) {
+                    return 'D';
+                } else if (cos > -0.7071) {
+                    return 'S';
+                } else {
+                    return 'A';
+                }
+            } else {
+                if (cos > 0.7071) {
+                    return 'D';
+                } else if (cos > -0.7071) {
+                    return 'W';
+                } else {
+                    return 'A';
+                }
+            }
+        }
+        return  ' ';
+    }
+
+    private double cos(double a, double b) {
+        return a / Math.sqrt(Math.pow(a, 2.0) + Math.pow(b, 2.0));
+    }
 }
