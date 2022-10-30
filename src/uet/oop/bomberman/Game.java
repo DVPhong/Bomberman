@@ -15,7 +15,9 @@ import uet.oop.bomberman.entities.Items.FlameItem;
 import uet.oop.bomberman.entities.Items.Item;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Monsters.Ball;
+import uet.oop.bomberman.entities.Monsters.Min;
 import uet.oop.bomberman.entities.Monsters.Oneal;
+import uet.oop.bomberman.entities.Monsters.Ova;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -138,6 +140,22 @@ public class Game {
                     }
                     case '2': {
                         object = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
+                        entities.add(object);
+                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        mapGame.setMap(i - 2, j, ' ');
+                        break;
+                    }
+                    case '3': {
+                        object = new Min(j, i, Sprite.minvo_left1.getFxImage());
+                        entities.add(object);
+                        object = new Tiles(j, i, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        mapGame.setMap(i - 2, j, ' ');
+                        break;
+                    }
+                    case '4': {
+                        object = new Ova(j, i, Sprite.ovape_left1.getFxImage());
                         entities.add(object);
                         object = new Tiles(j, i, Sprite.grass.getFxImage());
                         stillObjects.add(object);

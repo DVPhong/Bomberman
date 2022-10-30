@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.Game;
 import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -23,19 +22,28 @@ public class Bomber extends Entity {
             switch (event.getCode()) {
                 case A:
                     goTest = 'A';
+                    if (!Sound.bomberGo.isPlaying()) {
+                        Sound.bomberGo.play();
+                    }
                     break;
                 case D:
                     goTest = 'D';
+                    if (!Sound.bomberGo.isPlaying()) {
+                        Sound.bomberGo.play();
+                    }
                     break;
                 case S:
                     goTest = 'S';
+                    if (!Sound.bomberGo.isPlaying()) {
+                        Sound.bomberGo.play();
+                    }
                     break;
                 case W:
                     goTest = 'W';
+                    if (!Sound.bomberGo.isPlaying()) {
+                        Sound.bomberGo.play();
+                    }
                     break;
-            }
-            if (!Sound.bomberGo.isPlaying()) {
-                Sound.bomberGo.play();
             }
         };
         BombermanGame.game.scene.addEventFilter(KeyEvent.KEY_PRESSED, keyDownBomber);
