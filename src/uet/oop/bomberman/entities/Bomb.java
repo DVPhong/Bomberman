@@ -15,6 +15,9 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.entities.Monsters.Ball;
+import uet.oop.bomberman.entities.Monsters.Min;
+import uet.oop.bomberman.entities.Monsters.Oneal;
+import uet.oop.bomberman.entities.Monsters.Ova;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {
@@ -159,9 +162,10 @@ public class Bomb extends Entity {
                 }
 
                 for (int i = 1; i < entities.size(); i++) {
-                    if (entities.get(i) instanceof Ball) {
-                        if (entities.get(i).getLocation_x() == a.getLocation_x()
-                                && entities.get(i).getLocation_y() == a.getLocation_y()) {
+                    if (entities.get(i) instanceof Ball || entities.get(i) instanceof Min
+                        || entities.get(i) instanceof Oneal || entities.get(i) instanceof Ova) {
+                        if (entities.get(i).getLocation_x() - a.getLocation_x() <= 16
+                                && entities.get(i).getLocation_y() - a.getLocation_y() <= 16) {
                             entities.set(i, new Flame(a.getLocation_x(), a.getLocation_y(),
                                     Sprite.balloom_dead.getFxImage()));
                         }
