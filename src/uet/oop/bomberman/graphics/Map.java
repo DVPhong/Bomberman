@@ -7,7 +7,7 @@ import java.io.FileReader;
 public class Map {
     private char[][] map;
 
-    public static int mapLever = 1;
+    public static int mapLever = 2;
 
     public static int r = 0;
 

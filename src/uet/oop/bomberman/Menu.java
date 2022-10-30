@@ -20,20 +20,24 @@ public class Menu {
     public Menu() {
         Image background = new Image("file:res/menu.png");
         ImageView viewBackground = new ImageView(background);
+
         Image logo = new Image("file:res/logo.png");
         ImageView viewLogo = new ImageView(logo);
         viewLogo.setX(16);
         viewLogo.setY(16);
+
         Text luan = new Text(380, 69, "Bùi Đức Luân - 21020775");
         Text phong = new Text(380, 107, "Đoàn Văn Phong - 21020375");
         textSet(luan);
         textSet(phong);
+
         setting.setLayoutX(256);
         exit.setLayoutX(448);
         play.setLayoutX(64);
         buttonSet(play);
         buttonSet(setting);
         buttonSet(exit);
+
         menuGroup.getChildren().addAll(viewBackground, viewLogo, luan, phong, setting, exit, play);
         menu = new Scene(menuGroup, Sprite.SCALED_SIZE * BombermanGame.WIDTH,
                 Sprite.SCALED_SIZE * BombermanGame.HEIGHT);

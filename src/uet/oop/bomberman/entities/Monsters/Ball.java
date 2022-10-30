@@ -1,14 +1,15 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Monsters;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-public class Balloom extends Entity {
-    private final int balloomSpeed = 2;
+public class Ball extends Entity {
+    private final int ballSpeed = 2;
 
-    public Balloom(int x, int y, Image img) {
+    public Ball(int x, int y, Image img) {
         super(x, y, img);
     }
 
@@ -34,7 +35,7 @@ public class Balloom extends Entity {
         }
         switch (go) {
             case 'A':
-                location_x -= balloomSpeed;
+                location_x -= ballSpeed;
                 if (count_img % 30 == 0) {
                     this.img = Sprite.balloom_left1.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -45,7 +46,7 @@ public class Balloom extends Entity {
                 count_img += 4;
                 break;
             case 'D':
-                location_x += balloomSpeed;
+                location_x += ballSpeed;
                 if (count_img % 30 == 0) {
                     this.img = Sprite.balloom_right1.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -56,7 +57,7 @@ public class Balloom extends Entity {
                 count_img += 4;
                 break;
             case 'W':
-                location_y -= balloomSpeed;
+                location_y -= ballSpeed;
                 if (count_img % 30 == 0) {
                     this.img = Sprite.balloom_right1.getFxImage();
                 } else if (count_img % 30 == 10) {
@@ -67,7 +68,7 @@ public class Balloom extends Entity {
                 count_img += 4;
                 break;
             case 'S':
-                location_y += balloomSpeed;
+                location_y += ballSpeed;
                 if (count_img % 30 == 0) {
                     this.img = Sprite.balloom_left1.getFxImage();
                 } else if (count_img % 30 == 10) {

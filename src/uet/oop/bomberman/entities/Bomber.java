@@ -7,25 +7,17 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.concurrent.TimeUnit;
 
 public class Bomber extends Entity {
     public static int coordinatesX;
     public static int coordinatesY;
-    private int bomberSpeed = 3;
-    EventHandler<KeyEvent> keyBomber;
-
-    public void setBomberSpeed(int bomberSpeed) {
-        this.bomberSpeed = bomberSpeed;
-    }
-
-    public int getBomberSpeed() {
-        return bomberSpeed;
-    }
+    private int bomberSpeed = 2;
+    EventHandler<KeyEvent> keyDownBomber;
+    EventHandler<KeyEvent> keyUpBomber;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
-        keyBomber = event -> {
+        keyDownBomber = event -> {
             switch (event.getCode()) {
                 case A:
                     go = 'A';
@@ -41,13 +33,15 @@ public class Bomber extends Entity {
                     break;
             }
         };
-        BombermanGame.scene.addEventFilter(KeyEvent.KEY_PRESSED, keyBomber);
+        BombermanGame.game.scene.addEventFilter(KeyEvent.KEY_PRESSED, keyDownBomber);
+        keyUpBomber = event -> go = ' ';
+        BombermanGame.game.scene.addEventFilter(KeyEvent.KEY_RELEASED, keyUpBomber);
     }
 
     public void update() {
         updateGo();
         updateImg();
-        this.entityCollide();
+        entityCollide();
         y = location_y;
         go = ' ';
         coordinatesX = location_x;
@@ -114,10 +108,10 @@ public class Bomber extends Entity {
                 break;
         }
 
-        int x1 = (_x + 2) / Sprite.SCALED_SIZE;
-        int y1 = (_y + 2) / Sprite.SCALED_SIZE - 2;
-        int y2 = (_y + Sprite.SCALED_SIZE - 2) / Sprite.SCALED_SIZE - 2;
-        int x2 = (_x + Sprite.SCALED_SIZE - 2) / Sprite.SCALED_SIZE;
+        int x1 = (_x + 1) / Sprite.SCALED_SIZE;
+        int y1 = (_y + 1) / Sprite.SCALED_SIZE - 2;
+        int y2 = (_y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE - 2;
+        int x2 = (_x + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE;
 
         int _x1 = (_x + 10) / Sprite.SCALED_SIZE;
         int _y1 = (_y + 10) / Sprite.SCALED_SIZE - 2;
@@ -176,7 +170,7 @@ public class Bomber extends Entity {
         }
     }
 
-    public void setImg(Image image) {
-        img = image;
+    public void setBomberSpeed() {
+        this.bomberSpeed++;
     }
 }
