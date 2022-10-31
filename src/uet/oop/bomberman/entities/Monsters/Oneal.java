@@ -7,7 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Oneal extends Entity {
-    private int onealSpeed = 2;
+    private int onealSpeed = 1;
 
     public void setOnealSpeed(int onealSpeed) {
         this.onealSpeed = onealSpeed;
@@ -36,7 +36,12 @@ public class Oneal extends Entity {
                     go = 'S';
                     break;
             }
+            char sea = search();
+            if (sea != ' ') {
+                go = sea;
+            }
         }
+
         switch (go) {
             case 'A':
                 location_x -= onealSpeed;

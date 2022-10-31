@@ -7,8 +7,8 @@ import java.io.FileReader;
 public class Map {
     private char[][] map;
 
-    public static int maxLevel = 2;
-    public int mapLevel = 1;
+    public static int maxLevel = 4;
+    public int mapLevel = 2;
 
     public static int r = 0;
 

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Min extends Entity {
 
-    private final int minSpeed = 3;
+    private final int minSpeed = 2;
     
     public Min(int x, int y, Image img) {
         super(x, y, img);
