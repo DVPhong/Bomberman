@@ -36,7 +36,7 @@ Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này ch�
 - 
   ![](res/sprites/minvo_left1.png) *Min* di chuyển xuyên tường
 - 
-  ![](res/sprites/doll_left1.png) *Ova*
+  ![](res/sprites/doll_left1.png) *Doll*
 ## Mô tả game play, xử lý va chạm và xử lý bom nổ
 - Trong một màn chơi, Bomber sẽ được người chơi di chuyển, đặt và kích hoạt Bomb với mục tiêu chính là tiêu diệt tất cả Enemy và tìm ra vị trí Portal để có thể qua màn mới
 - Bomber sẽ bị giết khi va chạm với Enemy hoặc thuộc phạm vi Bomb nổ. Lúc đấy trò chơi kết thúc.
